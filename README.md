@@ -1,3 +1,5 @@
+# ClaudePractice
+
 # Smart Study Planner
 
 A full-stack web application that generates optimized study schedules based on your tasks, deadlines, difficulty, and daily availability. Instead of just storing tasks, it runs a real scheduling algorithm to distribute your study sessions intelligently across available days.
@@ -171,7 +173,7 @@ All endpoints (except auth) require the header: `Authorization: Bearer <token>`
 
 ## Scheduling Algorithm
 
-The core logic lives in [backend/src/services/scheduler.js](backend/src/services/scheduler.js).
+The core logic lives in [backend/src/services/scheduler.js](smart-study-planner/backend/src/services/scheduler.js).
 
 **Urgency score** for each task:
 ```
