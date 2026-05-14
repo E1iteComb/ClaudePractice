@@ -59,11 +59,23 @@ smart-study-planner/
 - [Node.js](https://nodejs.org/) v18 or higher
 - [Docker](https://www.docker.com/) (for PostgreSQL) **or** a PostgreSQL instance you already have
 
-## Setup
+## Running the App — Step by Step
 
-### 1. Start the Database
+Complete these steps in order. Steps 1–5 use **Terminal 1**. Step 6 requires opening a **second terminal**.
 
-If you have Docker, the easiest option is:
+---
+
+### Step 1 — Navigate to the project
+
+```bash
+cd smart-study-planner
+```
+
+---
+
+### Step 2 — Start the database
+
+Run this Docker command to spin up a PostgreSQL container:
 
 ```bash
 docker run -d \
@@ -75,16 +87,26 @@ docker run -d \
   postgres:16
 ```
 
-> If you have PostgreSQL installed locally, just create a database named `smart_study_planner`.
-
-### 2. Configure the Backend
+Verify it started:
 
 ```bash
-cd smart-study-planner/backend
+docker ps
+```
+
+You should see `study-planner-db` in the list with status `Up`.
+
+> **No Docker?** If you have PostgreSQL installed locally instead, create a database named `smart_study_planner` and skip this step.
+
+---
+
+### Step 3 — Configure the backend environment
+
+```bash
+cd backend
 cp .env.example .env
 ```
 
-Open `.env` and fill in your values:
+Open `backend/.env` in your editor. It should look like this — update any values if your database setup differs:
 
 ```env
 DATABASE_URL="postgresql://postgres:postgres@localhost:5432/smart_study_planner"
@@ -92,22 +114,57 @@ JWT_SECRET="replace-with-a-long-random-secret"
 PORT=4000
 ```
 
-### 3. Install & Migrate
+> Change `JWT_SECRET` to any long random string. The values above match the Docker command in Step 2.
+
+---
+
+### Step 4 — Install backend dependencies
 
 ```bash
-# Backend
-cd smart-study-planner/backend
 npm install
-npx prisma migrate dev --name init   # creates all tables
-npm run dev                           # starts on http://localhost:4000
-
-# Frontend (new terminal)
-cd smart-study-planner/frontend
-npm install
-npm run dev                           # starts on http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+---
+
+### Step 5 — Run database migrations and start the backend
+
+```bash
+npx prisma migrate dev --name init
+```
+
+This creates all the database tables. You should see output ending in `Your database is now in sync with your schema.`
+
+Then start the backend server:
+
+```bash
+npm run dev
+```
+
+The backend is running when you see: `Server running on port 4000`
+
+**Leave this terminal open.**
+
+---
+
+### Step 6 — Open a new terminal, install frontend, and start it
+
+Open a second terminal window/tab, then:
+
+```bash
+cd smart-study-planner/frontend
+npm install
+npm run dev
+```
+
+The frontend is running when you see a local URL, typically `http://localhost:5173`.
+
+---
+
+### Step 7 — Open the app
+
+Go to [http://localhost:5173](http://localhost:5173) in your browser (or whatever URL Vite printed in step 6).
+
+Register an account and you're ready to go.
 
 ## Usage
 
