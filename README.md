@@ -75,10 +75,10 @@ cd smart-study-planner
 
 ### Step 2 — Start the database
 
-Run this Docker command to spin up a PostgreSQL container:
+Run this command every time you open the project. It starts the existing container if it already exists, or creates a new one if this is your first time:
 
 ```bash
-docker run -d \
+docker start study-planner-db 2>/dev/null || docker run -d \
   --name study-planner-db \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=postgres \
